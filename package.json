@@ -43,6 +43,7 @@
     ]
   },
   "devDependencies": {
+    "@types/dotenv": "^8.2.0",
     "redux-devtools": "^3.5.0"
   }
 }
