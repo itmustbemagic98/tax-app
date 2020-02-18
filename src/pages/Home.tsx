@@ -2,15 +2,19 @@ import React from 'react'
 import {connect} from 'react-redux'
 import logo from './logo.svg'
 import './Home.css'
-import {setButtonColor} from '../store/actions'
+import {setButtonColor, setTableData} from '../store/actions'
+import Table from '../components/Table'
+import {IData} from '../store/types'
 
 interface IProps {
   color: string
   onClick: (color: string) => void
+  table: ReadonlyArray<IData>
+  setTableData: (data: ReadonlyArray<IData>) => void
 }
 
 const Home = (props: IProps) => {
-  const {color, onClick} = props
+  const {color, onClick, table, setTableData} = props
 
   return (
     <header className="App-header">
@@ -28,17 +32,20 @@ const Home = (props: IProps) => {
       >
         Home
         </a>
+      <Table data={table} actualizeStore={setTableData}></Table>
     </header>
   )
 }
 
 const mapStateToProps = (state: any) => {
   return {
-    color: state.buttonSetting.color
+    color: state.buttonSetting.color,
+    table: state.table
   }
 }
 const mapDispatchToProps = (dispatch: any) => ({
-  onClick: (color: string) => dispatch(setButtonColor(color))
+  onClick: (color: string) => dispatch(setButtonColor(color)),
+  setTableData: (data: ReadonlyArray<IData>) => dispatch(setTableData(data))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)
